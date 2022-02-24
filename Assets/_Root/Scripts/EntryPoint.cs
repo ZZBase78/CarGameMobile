@@ -1,5 +1,6 @@
 using Profile;
 using UnityEngine;
+using Services.Analytics;
 using Services.Ads.UnityAds;
 
 internal class EntryPoint : MonoBehaviour
@@ -9,6 +10,7 @@ internal class EntryPoint : MonoBehaviour
 
     [SerializeField] private Transform _placeForUi;
     [SerializeField] private UnityAdsService _adsService;
+    [SerializeField] private AnalyticsManager _analytics;
 
     private MainController _mainController;
 
@@ -20,6 +22,8 @@ internal class EntryPoint : MonoBehaviour
 
         if (_adsService.IsInitialized) OnAdsInitialized();
         else _adsService.Initialized.AddListener(OnAdsInitialized);
+
+        _analytics.SendMainMenuOpened();
     }
 
     private void OnDestroy()
