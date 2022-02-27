@@ -1,4 +1,4 @@
-using Game.Car;
+using Game.Transport;
 using Tool;
 using UnityEngine;
 
@@ -13,10 +13,10 @@ namespace Game.InputLogic
         public InputGameController(
             SubscriptionProperty<float> leftMove,
             SubscriptionProperty<float> rightMove,
-            CarModel car)
+            TransportModel transportModel)
         {
             _view = LoadView();
-            _view.Init(leftMove, rightMove, car.Speed);
+            _view.Init(leftMove, rightMove, transportModel.Speed);
         }
 
         private BaseInputView LoadView()
