@@ -1,11 +1,13 @@
 using Tool;
 using System;
 using Profile;
+using UnityEngine;
 using Game.InputLogic;
 using Game.TapeBackground;
 using Game.Transport;
 using Game.Transport.Boat;
 using Game.Transport.Car;
+using Features.AbilitySystem;
 
 namespace Game
 {
@@ -18,9 +20,10 @@ namespace Game
         private readonly TapeBackgroundController _tapeBackgroundController;
         private readonly InputGameController _inputGameController;
         private readonly TransportController _transportController;
+        private readonly AbilitiesController _abilitiesController;
 
 
-        public GameController(ProfilePlayer profilePlayer)
+        public GameController(Transform placeForUi, ProfilePlayer profilePlayer)
         {
             _profilePlayer = profilePlayer;
             _leftMoveDiff = new SubscriptionProperty<float>();
@@ -29,6 +32,7 @@ namespace Game
             _tapeBackgroundController = CreateTapeBackground();
             _inputGameController = CreateInputGameController();
             _transportController = CreateTransportController();
+            _abilitiesController = CreateAbilitiesController(placeForUi);
         }
 
 
@@ -61,6 +65,14 @@ namespace Game
             AddController(transportController);
 
             return transportController;
+        }
+
+        private AbilitiesController CreateAbilitiesController(Transform placeForUi)
+        {
+            var abilitiesController = new AbilitiesController(placeForUi, _transportController);
+            AddController(abilitiesController);
+
+            return abilitiesController;
         }
     }
 }
