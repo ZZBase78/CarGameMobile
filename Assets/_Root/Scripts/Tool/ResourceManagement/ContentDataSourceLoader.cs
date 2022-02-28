@@ -13,5 +13,11 @@ namespace Tool
             var dataSource = ResourcesLoader.LoadObject<ItemConfigDataSource>(resourcePath);
             return dataSource == null ? Array.Empty<ItemConfig>() : dataSource.ItemConfigs.ToArray();
         }
+
+        public static UpgradeItemConfig[] LoadUpgradeItemConfigs(ResourcePath resourcePath)
+        {
+            var dataSource = ResourcesLoader.LoadObject<UpgradeItemConfigDataSource>(resourcePath);
+            return dataSource == null ? Array.Empty<UpgradeItemConfig>() : dataSource.ItemConfigs.ToArray();
+        }
     }
 }
