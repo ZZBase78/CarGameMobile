@@ -9,13 +9,15 @@ namespace Ui
         [SerializeField] private Button _buttonStart;
         [SerializeField] private Button _buttonSettings;
         [SerializeField] private Button _buttonShed;
+        [SerializeField] private Button _buttonReward;
 
 
-        public void Init(UnityAction startGame, UnityAction settings, UnityAction shed)
+        public void Init(UnityAction startGame, UnityAction settings, UnityAction shed, UnityAction reward)
         {
             _buttonStart.onClick.AddListener(startGame);
             _buttonSettings.onClick.AddListener(settings);
             _buttonShed.onClick.AddListener(shed);
+            _buttonReward.onClick.AddListener(reward);
         }
 
         public void OnDestroy()
@@ -23,6 +25,7 @@ namespace Ui
             _buttonStart.onClick.RemoveAllListeners();
             _buttonSettings.onClick.RemoveAllListeners();
             _buttonShed.onClick.RemoveAllListeners();
+            _buttonReward.onClick.RemoveAllListeners();
         }
     }
 }

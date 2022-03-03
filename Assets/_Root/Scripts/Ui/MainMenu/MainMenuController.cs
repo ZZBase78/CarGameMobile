@@ -1,5 +1,6 @@
 using Tool;
 using Profile;
+using Services;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -16,7 +17,14 @@ namespace Ui
         {
             _profilePlayer = profilePlayer;
             _view = LoadView(placeForUi);
-            _view.Init(StartGame, Settings, Shed);
+            _view.Init(StartGame, Settings, Shed, Reward);
+
+            SubscribeAds();
+        }
+
+        protected override void OnDispose()
+        {
+            UnsubscribeAds();
         }
 
         private MainMenuView LoadView(Transform placeForUi)
@@ -36,5 +44,25 @@ namespace Ui
 
         private void Shed() =>
             _profilePlayer.CurrentState.Value = GameState.Shed;
+
+        private void Reward() =>
+            ServiceLocator.AdsService.RewardedPlayer.Play();
+
+        private void SubscribeAds()
+        {
+            ServiceLocator.AdsService.RewardedPlayer.Finished += OnAdsFinished;
+            ServiceLocator.AdsService.RewardedPlayer.Failed += OnAdsCancelled;
+            ServiceLocator.AdsService.RewardedPlayer.Skipped += OnAdsCancelled;
+        }
+
+        private void UnsubscribeAds()
+        {
+            ServiceLocator.AdsService.RewardedPlayer.Finished -= OnAdsFinished;
+            ServiceLocator.AdsService.RewardedPlayer.Failed -= OnAdsCancelled;
+            ServiceLocator.AdsService.RewardedPlayer.Skipped -= OnAdsCancelled;
+        }
+
+        private void OnAdsFinished() => Log("You've received a reward for ads!");
+        private void OnAdsCancelled() => Log("Receiving a reward for ads has been interrupted!");
     }
 }
