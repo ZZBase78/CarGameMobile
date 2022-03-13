@@ -34,7 +34,7 @@ namespace Game
 
             _tapeBackgroundController = CreateTapeBackground();
             _inputGameController = CreateInputGameController();
-            _transportController = CreateTransportController();
+            _transportController = CreateTransportController(profilePlayer.CurrentTransport);
             _abilitiesController = CreateAbilitiesController(placeForUi);
 
             ServiceLocator.Analytics.SendGameStarted();
@@ -57,13 +57,13 @@ namespace Game
             return inputGameController;
         }
 
-        private TransportController CreateTransportController()
+        private TransportController CreateTransportController(TransportModel transportModel)
         {
             TransportController transportController =
                 _profilePlayer.CurrentTransport.Type switch
                 {
-                    TransportType.Car => new CarController(),
-                    TransportType.Boat => new BoatController(),
+                    TransportType.Car => new CarController(transportModel),
+                    TransportType.Boat => new BoatController(transportModel),
                     _ => throw new ArgumentException(nameof(TransportType))
                 };
 
