@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleScripts
 {
-    public class MainWindowObserver : MonoBehaviour
+    public class MainWindowMediator : MonoBehaviour
     {
         [Header("Player Stats")]
         [SerializeField] private TMP_Text _countMoneyText;
