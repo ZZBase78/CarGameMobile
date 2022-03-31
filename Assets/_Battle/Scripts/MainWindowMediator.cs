@@ -34,6 +34,7 @@ namespace BattleScripts
 
         [Header("Other Buttons")]
         [SerializeField] private Button _fightButton;
+        [SerializeField] private Button _escapeButton;
 
         private int _allCountMoneyPlayer;
         private int _allCountHealthPlayer;
@@ -101,6 +102,7 @@ namespace BattleScripts
             _minusCrimeButton.onClick.AddListener(DecreaseCrime);
 
             _fightButton.onClick.AddListener(Fight);
+            _escapeButton.onClick.AddListener(Escape);
         }
 
         private void Unsubscribe()
@@ -118,6 +120,7 @@ namespace BattleScripts
             _minusCrimeButton.onClick.RemoveAllListeners();
 
             _fightButton.onClick.RemoveAllListeners();
+            _escapeButton.onClick.RemoveAllListeners();
         }
 
 
@@ -139,6 +142,7 @@ namespace BattleScripts
         private void AddToValue(ref int value, int addition, DataType dataType)
         {
             value += addition;
+            UpdateEscapeButtonVisibility();
             ChangeDataWindow(value, dataType);
         }
 
@@ -176,6 +180,20 @@ namespace BattleScripts
                 _ => throw new ArgumentException($"Wrong {nameof(DataType)}")
             };
 
+        private void UpdateEscapeButtonVisibility()
+        {
+            const int minCrimeToUse = 0;
+            const int maxCrimeToUse = 2;
+            const int minCrimeToShow = 0;
+            const int maxCrimeToShow = 5;
+
+            bool canUse = minCrimeToUse <= _allCountCrimePlayer && _allCountCrimePlayer <= maxCrimeToUse;
+            bool canShow = minCrimeToShow <= _allCountCrimePlayer && _allCountCrimePlayer <= maxCrimeToShow;
+
+            _escapeButton.interactable = canUse;
+            _escapeButton.gameObject.SetActive(canShow);
+        }
+
 
         private void Fight()
         {
@@ -184,6 +202,14 @@ namespace BattleScripts
 
             string color = isVictory ? "#07FF00" : "#FF0000";
             string message = isVictory ? "Win" : "Lose";
+
+            Debug.Log($"<color={color}>{message}!!!</color>");
+        }
+
+        private void Escape()
+        {
+            string color = "#FFB202";
+            string message = "Escaped";
 
             Debug.Log($"<color={color}>{message}!!!</color>");
         }
