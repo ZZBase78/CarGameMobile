@@ -27,6 +27,7 @@ internal class MainController : BaseController
     private RewardController _rewardController;
     private StartFightController _startFightController;
     private GameController _gameController;
+    private FightController _fightController;
 
 
     public MainController(Transform placeForUi, ProfilePlayer profilePlayer)
@@ -69,6 +70,9 @@ internal class MainController : BaseController
                 _gameController = new GameController(_placeForUi, _profilePlayer);
                 _startFightController = new StartFightController(_placeForUi, _profilePlayer);
                 break;
+            case GameState.Fight:
+                _fightController = new FightController(_placeForUi, _profilePlayer);
+                break;
         }
     }
 
@@ -80,6 +84,7 @@ internal class MainController : BaseController
         _rewardController?.Dispose();
         _startFightController?.Dispose();
         _gameController?.Dispose();
+        _fightController?.Dispose();
     }
 
     private void DisposeSubInstances()
