@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Features.Shed;
 using Features.Shed.Upgrade;
+using Features.Rewards;
 using Features.Inventory;
 using Features.Inventory.Items;
 using Object = UnityEngine.Object;
@@ -22,6 +23,7 @@ internal class MainController : BaseController
     private MainMenuController _mainMenuController;
     private SettingsMenuController _settingsMenuController;
     private ShedController _shedController;
+    private RewardController _rewardController;
     private GameController _gameController;
 
 
@@ -58,6 +60,9 @@ internal class MainController : BaseController
             case GameState.Shed:
                 _shedController = CreateShedController(_placeForUi);
                 break;
+            case GameState.DailyReward:
+                _rewardController = new RewardController(_placeForUi, _profilePlayer);
+                break;
             case GameState.Game:
                 _gameController = new GameController(_placeForUi, _profilePlayer);
                 break;
@@ -69,6 +74,7 @@ internal class MainController : BaseController
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
         _shedController?.Dispose();
+        _rewardController?.Dispose();
         _gameController?.Dispose();
     }
 
