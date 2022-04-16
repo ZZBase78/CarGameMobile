@@ -38,7 +38,8 @@ namespace Tool.Bundles.Examples
         private void LoadAsset()
         {
             _loadAssetsButton.interactable = false;
-            StartCoroutine(DownloadAndSetAssetBundles());
+            StartCoroutine(DownloadAndSetSpritesAssetBundles());
+            StartCoroutine(DownloadAndSetAudioAssetBundles());
         }
 
         private void SpawnPrefab()

@@ -16,15 +16,19 @@ namespace Tool.Bundles.Examples
         private AssetBundle _audioAssetBundle;
 
 
-        protected IEnumerator DownloadAndSetAssetBundles()
+        protected IEnumerator DownloadAndSetSpritesAssetBundles()
         {
             yield return GetSpritesAssetBundle();
-            yield return GetAudioAssetBundle();
 
             if (_spritesAssetBundle != null)
                 SetSpriteAssets(_spritesAssetBundle);
             else
                 Debug.LogError($"AssetBundle {nameof(_spritesAssetBundle)} failed to load");
+        }
+
+        protected IEnumerator DownloadAndSetAudioAssetBundles()
+        {
+            yield return GetAudioAssetBundle();
 
             if (_audioAssetBundle != null)
                 SetAudioAssets(_audioAssetBundle);
