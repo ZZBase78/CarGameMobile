@@ -831,6 +831,7 @@ PlayerSettings:
   vrEditorSettings: {}
   cloudServicesEnabled:
     Unity Ads: 1
+    Purchasing: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
