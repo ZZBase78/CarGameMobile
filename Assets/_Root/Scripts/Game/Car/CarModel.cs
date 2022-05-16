@@ -1,10 +1,8 @@
 namespace Game.Car
 {
-    internal class CarModel
+    internal class CarModel : TransportModel
     {
-        public readonly float Speed;
+        public CarModel(float speed) : base(speed) { }
 
-        public CarModel(float speed) =>
-            Speed = speed;
     }
 }
