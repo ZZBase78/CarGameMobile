@@ -19,8 +19,30 @@ namespace Game
             var inputGameController = new InputGameController(leftMoveDiff, rightMoveDiff, profilePlayer.CurrentCar);
             AddController(inputGameController);
 
-            var carController = new CarController();
-            AddController(carController);
+            LoadTransportController(profilePlayer.transportType);
+        }
+
+        private void LoadTransportController(TransportType transportType)
+        {
+            TransportController transportController;
+            switch (transportType)
+            {
+                case TransportType.Car:
+                    transportController = new CarController();
+                    break;
+                case TransportType.Boat:
+                    transportController = new BoatController();
+                    break;
+                default:
+                    transportController = null;
+                    break;
+
+            }
+
+            if (transportController != null)
+            {
+                AddController(transportController);
+            }
         }
     }
 }

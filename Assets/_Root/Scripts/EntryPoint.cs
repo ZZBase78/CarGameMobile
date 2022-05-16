@@ -13,7 +13,7 @@ internal class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        var profilePlayer = new ProfilePlayer(SpeedCar, InitialState);
+        var profilePlayer = new ProfilePlayer(SpeedCar, InitialState, TransportType.Boat);
         _mainController = new MainController(_placeForUi, profilePlayer);
     }
 
