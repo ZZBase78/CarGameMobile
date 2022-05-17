@@ -1,6 +1,7 @@
 using Profile;
 using Tool;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using Object = UnityEngine.Object;
 
 namespace Ui
@@ -16,7 +17,7 @@ namespace Ui
         {
             _profilePlayer = profilePlayer;
             _view = LoadView(placeForUi);
-            _view.Init(StartGame);
+            _view.Init(StartGame, Rewarded, BuyItem);
         }
 
         private MainMenuView LoadView(Transform placeForUi)
@@ -30,5 +31,31 @@ namespace Ui
 
         private void StartGame() =>
             _profilePlayer.CurrentState.Value = GameState.Game;
+
+        private void Rewarded()
+        {
+            SingleServices.instance.adsService.RewardedPlayer.Play();
+        }
+
+        private void BuyItem()
+        {
+            SingleServices.instance.iapService.actionBuyItemComplete += BuyItemSuccess;
+            SingleServices.instance.iapService.Buy("product_3");
+        }
+
+        private void BuyItemSuccess(PurchaseEventArgs args)
+        {
+            SingleServices.instance.iapService.actionBuyItemComplete -= BuyItemSuccess;
+
+            SingleServices.instance.analytics.Transaction(args.purchasedProduct.definition.id, args.purchasedProduct.metadata.localizedPrice, args.purchasedProduct.metadata.isoCurrencyCode);
+
+            Debug.Log("Buy complete: " + args.purchasedProduct.definition.id);
+        }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+            SingleServices.instance.iapService.actionBuyItemComplete -= BuyItemSuccess;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Purchasing;
@@ -11,9 +12,12 @@ namespace Services.IAP
 
         [field: Header("Events")]
         [field: SerializeField] public UnityEvent Initialized { get; private set; }
+
         [field: SerializeField] public UnityEvent PurchaseSucceed { get; private set; }
         [field: SerializeField] public UnityEvent PurchaseFailed { get; private set; }
         public bool IsInitialized { get; private set; }
+
+        public event Action<PurchaseEventArgs> actionBuyItemComplete;
 
         private IExtensionProvider _extensionProvider;
         private PurchaseValidator _purchaseValidator;
@@ -58,7 +62,10 @@ namespace Services.IAP
         PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs args)
         {
             if (_purchaseValidator.Validate(args))
+            {
                 PurchaseSucceed.Invoke();
+                actionBuyItemComplete?.Invoke(args);
+            }
             else
                 OnPurchaseFailed(args.purchasedProduct.definition.id, "NonValid");
 

@@ -19,26 +19,35 @@ internal class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
+        InitSingleServices();
+
         var profilePlayer = new ProfilePlayer(SpeedCar, InitialState);
         _mainController = new MainController(_placeForUi, profilePlayer);
 
-        if (_adsService.IsInitialized) OnAdsInitialized();
-        else _adsService.Initialized.AddListener(OnAdsInitialized);
+        if (SingleServices.instance.adsService.IsInitialized) OnAdsInitialized();
+        else SingleServices.instance.adsService.Initialized.AddListener(OnAdsInitialized);
 
-        if (_iapService.IsInitialized) OnIapInitialized();
-        else _iapService.Initialized.AddListener(OnIapInitialized);
+        if (SingleServices.instance.iapService.IsInitialized) OnIapInitialized();
+        else SingleServices.instance.iapService.Initialized.AddListener(OnIapInitialized);
 
-        _analytics.SendMainMenuOpened();
+        SingleServices.instance.analytics.SendMainMenuOpened();
+    }
+
+    private void InitSingleServices()
+    {
+        SingleServices.instance.adsService = _adsService;
+        SingleServices.instance.iapService = _iapService;
+        SingleServices.instance.analytics = _analytics;
     }
 
     private void OnDestroy()
     {
-        _adsService.Initialized.RemoveListener(OnAdsInitialized);
-        _iapService.Initialized.RemoveListener(OnIapInitialized);
+        SingleServices.instance.adsService.Initialized.RemoveListener(OnAdsInitialized);
+        SingleServices.instance.iapService.Initialized.RemoveListener(OnIapInitialized);
         _mainController.Dispose();
     }
 
 
-    private void OnAdsInitialized() => _adsService.InterstitialPlayer.Play();
-    private void OnIapInitialized() => _iapService.Buy("product_1");
+    private void OnAdsInitialized() => SingleServices.instance.adsService.InterstitialPlayer.Play();
+    private void OnIapInitialized() => SingleServices.instance.iapService.Buy("product_1");
 }

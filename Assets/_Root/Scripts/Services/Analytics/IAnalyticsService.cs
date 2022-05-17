@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Services.Analytics
@@ -6,5 +7,6 @@ namespace Services.Analytics
     {
         void SendEvent(string eventName);
         void SendEvent(string eventName, Dictionary<string, object> eventData);
+        UnityEngine.Analytics.AnalyticsResult Transaction(string productId, Decimal amount, string currency);
     }
 }

@@ -10,6 +10,8 @@ namespace Game
     {
         public GameController(ProfilePlayer profilePlayer)
         {
+            SingleServices.instance.analytics.LevelStarted();
+
             var leftMoveDiff = new SubscriptionProperty<float>();
             var rightMoveDiff = new SubscriptionProperty<float>();
 
