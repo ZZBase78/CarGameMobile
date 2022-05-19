@@ -6,11 +6,13 @@ namespace Game.Transport
     {
         private readonly float _defaultSpeed;
         private readonly float _defaultJumpHeight;
+        private readonly float _defaultFirePower = 1f;
 
         public readonly TransportType Type;
 
         public float Speed { get; set; }
         public float JumpHeight { get; set; }
+        public float FirePower { get; set; }
 
 
         public TransportModel(float speed, float jumpHeight, TransportType type)
@@ -20,12 +22,14 @@ namespace Game.Transport
             Speed = speed;
             JumpHeight = jumpHeight;
             Type = type;
+            FirePower = _defaultFirePower;
         }
 
         public void Restore()
         {
             Speed = _defaultSpeed;
             JumpHeight = _defaultJumpHeight;
+            FirePower = _defaultFirePower;
         }
             
     }

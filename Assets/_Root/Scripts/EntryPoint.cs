@@ -5,7 +5,7 @@ using UnityEngine;
 internal class EntryPoint : MonoBehaviour
 {
     private const float SpeedCar = 15f;
-    private const float JumpHeightCar = 10f;
+    private const float JumpHeightCar = 250f;
     private const GameState InitialState = GameState.Start;
     private const TransportType TransportType = Game.TransportType.Car;
 
