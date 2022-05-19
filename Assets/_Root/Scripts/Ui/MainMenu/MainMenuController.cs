@@ -1,5 +1,5 @@
-using Profile;
 using Tool;
+using Profile;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -16,7 +16,7 @@ namespace Ui
         {
             _profilePlayer = profilePlayer;
             _view = LoadView(placeForUi);
-            _view.Init(StartGame, Settings);
+            _view.Init(StartGame, Settings, Shed);
         }
 
         private MainMenuView LoadView(Transform placeForUi)
@@ -33,5 +33,8 @@ namespace Ui
 
         private void Settings() =>
             _profilePlayer.CurrentState.Value = GameState.Settings;
+
+        private void Shed() =>
+            _profilePlayer.CurrentState.Value = GameState.Shed;
     }
 }
