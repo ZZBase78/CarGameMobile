@@ -57,8 +57,8 @@ namespace Game
             TransportController transportController =
                 _profilePlayer.CurrentTransport.Type switch
                 {
-                    TransportType.Car => new CarController(),
-                    TransportType.Boat => new BoatController(),
+                    TransportType.Car => new CarController(_profilePlayer),
+                    TransportType.Boat => new BoatController(_profilePlayer),
                     _ => throw new ArgumentException(nameof(TransportType))
                 };
 
