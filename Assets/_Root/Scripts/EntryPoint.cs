@@ -1,3 +1,4 @@
+using Game;
 using Profile;
 using UnityEngine;
 using Services.IAP;
@@ -8,6 +9,7 @@ internal class EntryPoint : MonoBehaviour
 {
     private const float SpeedCar = 15f;
     private const GameState InitialState = GameState.Start;
+    private const TransportType TransportType = Game.TransportType.Car;
 
     [SerializeField] private Transform _placeForUi;
     [SerializeField] private IAPService _iapService;
@@ -19,7 +21,7 @@ internal class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        var profilePlayer = new ProfilePlayer(SpeedCar, InitialState);
+        var profilePlayer = new ProfilePlayer(SpeedCar, TransportType, InitialState);
         _mainController = new MainController(_placeForUi, profilePlayer);
 
         if (_adsService.IsInitialized) OnAdsInitialized();
