@@ -1,6 +1,7 @@
 using Tool;
 using System;
 using Profile;
+using Services;
 using UnityEngine;
 using Game.InputLogic;
 using Game.TapeBackground;
@@ -33,6 +34,8 @@ namespace Game
             _inputGameController = CreateInputGameController();
             _transportController = CreateTransportController();
             _abilitiesController = CreateAbilitiesController(placeForUi);
+
+            ServiceRoster.Analytics.SendGameStarted();
         }
 
 
