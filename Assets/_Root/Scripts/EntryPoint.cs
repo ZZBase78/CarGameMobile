@@ -4,10 +4,12 @@ using UnityEngine;
 
 internal class EntryPoint : MonoBehaviour
 {
-    private const float SpeedCar = 15f;
-    private const GameState InitialState = GameState.Start;
-    private const TransportType TransportType = Game.TransportType.Car;
+    [Header("Initial Settings")]
+    [SerializeField] private float _speedCar;
+    [SerializeField] private GameState _initialState;
+    [SerializeField] private TransportType _transportType;
 
+    [Header("Scene Objects")]
     [SerializeField] private Transform _placeForUi;
 
     private MainController _mainController;
@@ -15,7 +17,7 @@ internal class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        var profilePlayer = new ProfilePlayer(SpeedCar, TransportType, InitialState);
+        var profilePlayer = new ProfilePlayer(_speedCar, _transportType, _initialState);
         _mainController = new MainController(_placeForUi, profilePlayer);
     }
 
