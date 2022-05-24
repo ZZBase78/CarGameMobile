@@ -73,7 +73,7 @@ namespace Game
         private AbilitiesMvcContainer CreateAbilitiesContainer(IAbilityActivator abilityActivator, Transform placeForUi)
         {
             var container = new AbilitiesMvcContainer(abilityActivator, placeForUi);
-            AddController(container);
+            AddContainer(container);
 
             return container;
         }

@@ -46,7 +46,7 @@ namespace Features.Shed
         private InventoryMvcContainer CreateInventoryContainer(IInventoryModel model, Transform placeForUi)
         {
             var container = new InventoryMvcContainer(model, placeForUi);
-            AddController(container);
+            AddContainer(container);
 
             return container;
         }

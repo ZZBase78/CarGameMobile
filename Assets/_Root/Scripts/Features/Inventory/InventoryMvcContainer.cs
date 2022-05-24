@@ -4,7 +4,7 @@ using Features.Inventory.Items;
 
 namespace Features.Inventory
 {
-    internal class InventoryMvcContainer : BaseController
+    internal class InventoryMvcContainer : BaseMvcContainer
     {
         private static readonly ResourcePath _viewPath = new("Prefabs/Inventory/InventoryView");
         private static readonly ResourcePath _dataSourcePath = new("Configs/Inventory/ItemConfigDataSource");

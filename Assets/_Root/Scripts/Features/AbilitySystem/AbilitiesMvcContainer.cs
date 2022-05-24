@@ -4,7 +4,7 @@ using Features.AbilitySystem.Abilities;
 
 namespace Features.AbilitySystem
 {
-    internal class AbilitiesMvcContainer : BaseController
+    internal class AbilitiesMvcContainer : BaseMvcContainer
     {
         private static readonly ResourcePath _dataSourcePath = new ResourcePath("Configs/Ability/AbilityItemConfigDataSource");
         private static readonly ResourcePath _viewPath = new ResourcePath("Prefabs/Ability/AbilitiesView");
