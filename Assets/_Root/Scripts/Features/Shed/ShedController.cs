@@ -34,7 +34,7 @@ namespace Features.Shed
             _view = new ShedFactory().CreateView(placeForUi);
             AddGameObject(_view.gameObject);
 
-            _transportUpgrader = new TransportUpgrader(profilePlayer.CurrentTransport, profilePlayer.Inventory.EquippedItems);
+            _transportUpgrader = new TransportUpgrader(_profilePlayer.CurrentTransport, _profilePlayer.Inventory.EquippedItems);
             AddDisposableObject(_transportUpgrader);
 
             _view.Init(Apply, Back);
