@@ -37,7 +37,7 @@ namespace Game
             _transportController = CreateTransportController();
             _abilitiesController = CreateAbilitiesController(placeForUi);
 
-            //ServiceRoster.Analytics.SendGameStarted();
+            ServiceRoster.Analytics.SendGameStarted();
         }
 
 

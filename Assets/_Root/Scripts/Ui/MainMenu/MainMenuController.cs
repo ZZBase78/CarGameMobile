@@ -19,14 +19,14 @@ namespace Ui
             _view = LoadView(placeForUi);
             _view.Init(StartGame, Settings, Shed, AdsReward, BuyProduct);
 
-            //SubscribeAds();
-            //SubscribeIAP();
+            SubscribeAds();
+            SubscribeIAP();
         }
 
         protected override void OnDispose()
         {
-            //UnsubscribeAds();
-            //UnsubscribeIAP();
+            UnsubscribeAds();
+            UnsubscribeIAP();
         }
 
         private MainMenuView LoadView(Transform placeForUi)
