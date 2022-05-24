@@ -2,7 +2,8 @@ using Ui;
 using Game;
 using Profile;
 using UnityEngine;
-using Features.Shed;
+using System.Collections.Generic;
+using Features.Shed.Upgrade;
 
 internal class MainController : BaseController
 {
@@ -11,9 +12,9 @@ internal class MainController : BaseController
 
     private MainMenuController _mainMenuController;
     private SettingsMenuController _settingsMenuController;
-    private ShedController _shedController;
     private GameController _gameController;
-
+    private ShedControllerFactory _shedControllerFactory;
+    private TransportUpgrader _transportUpgrader;
 
     public MainController(Transform placeForUi, ProfilePlayer profilePlayer)
     {
@@ -22,18 +23,21 @@ internal class MainController : BaseController
 
         profilePlayer.CurrentState.SubscribeOnChange(OnChangeGameState);
         OnChangeGameState(_profilePlayer.CurrentState.Value);
+
+        _shedControllerFactory = new ShedControllerFactory(profilePlayer, placeForUi);
+        _transportUpgrader = new TransportUpgrader(profilePlayer.CurrentTransport, profilePlayer.Inventory.EquippedItems);
     }
 
     protected override void OnDispose()
     {
-        DisposeControllers();
+        DisposeAllControllers();
         _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
 
 
     private void OnChangeGameState(GameState state)
     {
-        DisposeControllers();
+        DisposeAllControllers();
 
         switch (state)
         {
@@ -44,7 +48,7 @@ internal class MainController : BaseController
                 _settingsMenuController = new SettingsMenuController(_placeForUi, _profilePlayer);
                 break;
             case GameState.Shed:
-                _shedController = new ShedController(_placeForUi, _profilePlayer);
+                _shedControllerFactory.Display(OnShedDone, OnShedBack);
                 break;
             case GameState.Game:
                 _gameController = new GameController(_placeForUi, _profilePlayer);
@@ -52,11 +56,23 @@ internal class MainController : BaseController
         }
     }
 
-    private void DisposeControllers()
+    private void DisposeAllControllers()
     {
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
-        _shedController?.Dispose();
         _gameController?.Dispose();
+    }
+
+    private void OnShedBack()
+    {
+        _shedControllerFactory.Destroy();
+        _profilePlayer.CurrentState.Value = GameState.Start;
+    }
+
+    private void OnShedDone(IReadOnlyDictionary<string, IUpgradeHandler> upgradeItems)
+    {
+        _transportUpgrader.Upgrade(upgradeItems);
+        _shedControllerFactory.Destroy();
+        _profilePlayer.CurrentState.Value = GameState.Start;
     }
 }
