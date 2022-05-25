@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Features.Inventory.Items;
+using UnityEngine;
 
 namespace Features.Inventory
 {
@@ -10,24 +11,20 @@ namespace Features.Inventory
 
     internal class InventoryController : BaseController, IInventoryController
     {
-        private readonly IInventoryView _view;
-        private readonly IInventoryModel _model;
-        private readonly IItemsRepository _repository;
+        private readonly InventoryView _view;
+        private readonly InventoryModel _model;
+        private readonly ItemsRepository _repository;
 
 
-        public InventoryController(
-            [NotNull] IInventoryView inventoryView,
-            [NotNull] IInventoryModel inventoryModel,
-            [NotNull] IItemsRepository itemsRepository)
+        public InventoryController(Transform placeForUi, InventoryModel inventoryModel)
         {
-            _view
-                = inventoryView ?? throw new ArgumentNullException(nameof(inventoryView));
+            _view = new InventoryFactory().CreateView(placeForUi);
+            AddGameObject(_view.gameObject);
 
-            _model
-                = inventoryModel ?? throw new ArgumentNullException(nameof(inventoryModel));
+            _model = inventoryModel;
 
-            _repository
-                = itemsRepository ?? throw new ArgumentNullException(nameof(itemsRepository));
+            _repository = new ItemsRepositoryFactory().Create();
+            AddRepository(_repository);
 
             _view.Display(_repository.Items.Values, OnItemClicked);
 

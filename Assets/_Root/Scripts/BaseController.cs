@@ -61,7 +61,7 @@ internal abstract class BaseController : IDisposable
         _gameObjects.Add(gameObject);
     }
 
-    private void AddDisposableObject(IDisposable disposable)
+    public void AddDisposableObject(IDisposable disposable)
     {
         _disposableObjects ??= new List<IDisposable>();
         _disposableObjects.Add(disposable);
