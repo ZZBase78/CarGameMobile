@@ -7,10 +7,13 @@ namespace BattleScripts
 {
     internal class MainWindowMediator : MonoBehaviour
     {
+        [SerializeField] private int _maxCrimeRate = 2;
+
         [Header("Player Stats")]
         [SerializeField] private TMP_Text _countMoneyText;
         [SerializeField] private TMP_Text _countHealthText;
         [SerializeField] private TMP_Text _countPowerText;
+        [SerializeField] private TMP_Text _countCrimeRateText;
 
         [Header("Enemy Stats")]
         [SerializeField] private TMP_Text _countPowerEnemyText;
@@ -27,16 +30,23 @@ namespace BattleScripts
         [SerializeField] private Button _addPowerButton;
         [SerializeField] private Button _minusPowerButton;
 
+        [Header("Power Buttons")]
+        [SerializeField] private Button _addCrimeRateButton;
+        [SerializeField] private Button _minusCrimeRateButton;
+
         [Header("Other Buttons")]
         [SerializeField] private Button _fightButton;
+        [SerializeField] private Button _skipBattleButton;
 
         private int _allCountMoneyPlayer;
         private int _allCountHealthPlayer;
         private int _allCountPowerPlayer;
+        private int _allCountCrimeRatePlayer;
 
         private PlayerData _money;
         private PlayerData _heath;
         private PlayerData _power;
+        private PlayerData _crimeRate;
 
         private Enemy _enemy;
 
@@ -48,8 +58,11 @@ namespace BattleScripts
             _money = CreatePlayerData(DataType.Money);
             _heath = CreatePlayerData(DataType.Health);
             _power = CreatePlayerData(DataType.Power);
+            _crimeRate = CreatePlayerData(DataType.CrimeRate);
 
             Subscribe();
+
+            UpdateVisibleSkipBattleButton();
         }
 
         private void OnDestroy()
@@ -57,6 +70,7 @@ namespace BattleScripts
             DisposePlayerData(ref _money);
             DisposePlayerData(ref _heath);
             DisposePlayerData(ref _power);
+            DisposePlayerData(ref _crimeRate);
 
             Unsubscribe();
         }
@@ -88,7 +102,11 @@ namespace BattleScripts
             _addPowerButton.onClick.AddListener(IncreasePower);
             _minusPowerButton.onClick.AddListener(DecreasePower);
 
+            _addCrimeRateButton.onClick.AddListener(IncreaseCrimeRate);
+            _minusCrimeRateButton.onClick.AddListener(DecreaseCrimeRate);
+
             _fightButton.onClick.AddListener(Fight);
+            _skipBattleButton.onClick.AddListener(SkipBattle);
         }
 
         private void Unsubscribe()
@@ -102,7 +120,11 @@ namespace BattleScripts
             _addPowerButton.onClick.RemoveAllListeners();
             _minusPowerButton.onClick.RemoveAllListeners();
 
+            _addCrimeRateButton.onClick.RemoveAllListeners();
+            _minusCrimeRateButton.onClick.RemoveAllListeners();
+
             _fightButton.onClick.RemoveAllListeners();
+            _skipBattleButton.onClick.RemoveAllListeners();
         }
 
 
@@ -114,6 +136,9 @@ namespace BattleScripts
 
         private void IncreasePower() => IncreaseValue(ref _allCountPowerPlayer, DataType.Power);
         private void DecreasePower() => DecreaseValue(ref _allCountPowerPlayer, DataType.Power);
+
+        private void IncreaseCrimeRate() => IncreaseValue(ref _allCountCrimeRatePlayer, DataType.CrimeRate);
+        private void DecreaseCrimeRate() => DecreaseValue(ref _allCountCrimeRatePlayer, DataType.CrimeRate);
 
         private void IncreaseValue(ref int value, DataType dataType) => AddToValue(ref value, 1, dataType);
         private void DecreaseValue(ref int value, DataType dataType) => AddToValue(ref value, -1, dataType);
@@ -129,14 +154,34 @@ namespace BattleScripts
         {
             PlayerData playerData = GetPlayerData(dataType);
             TMP_Text textComponent = GetTextComponent(dataType);
-            string text = $"Player {dataType:F} {countChangeData}";
+            string dataTypeString = GetDataTypeString(dataType);
+            string text = $"Player {dataTypeString:F}: {countChangeData}";
 
             playerData.Value = countChangeData;
             textComponent.text = text;
 
             int enemyPower = _enemy.CalcPower();
             _countPowerEnemyText.text = $"Enemy Power {enemyPower}";
+
+            if (dataType == DataType.CrimeRate) UpdateVisibleSkipBattleButton();
         }
+
+        private void UpdateVisibleSkipBattleButton()
+        {
+            PlayerData playerCrimeRateData = GetPlayerData(DataType.CrimeRate);
+            bool buttonActive = playerCrimeRateData.Value <= _maxCrimeRate;
+            _skipBattleButton.gameObject.SetActive(buttonActive);
+        }
+
+        private string GetDataTypeString(DataType dataType) =>
+            dataType switch
+            {
+                DataType.Money => "Money",
+                DataType.Health => "Health",
+                DataType.Power => "Power",
+                DataType.CrimeRate => "Crime Rate",
+                _ => throw new ArgumentException($"Wrong {nameof(DataType)}")
+            };
 
         private TMP_Text GetTextComponent(DataType dataType) =>
             dataType switch
@@ -144,6 +189,7 @@ namespace BattleScripts
                 DataType.Money => _countMoneyText,
                 DataType.Health => _countHealthText,
                 DataType.Power => _countPowerText,
+                DataType.CrimeRate => _countCrimeRateText,
                 _ => throw new ArgumentException($"Wrong {nameof(DataType)}")
             };
 
@@ -153,6 +199,7 @@ namespace BattleScripts
                 DataType.Money => _money,
                 DataType.Health => _heath,
                 DataType.Power => _power,
+                DataType.CrimeRate => _crimeRate,
                 _ => throw new ArgumentException($"Wrong {nameof(DataType)}")
             };
 
@@ -166,6 +213,11 @@ namespace BattleScripts
             string message = isVictory ? "Win" : "Lose";
 
             Debug.Log($"<color={color}>{message}!!!</color>");
+        }
+
+        private void SkipBattle()
+        {
+            Debug.Log("Battle was skipped");
         }
     }
 }
