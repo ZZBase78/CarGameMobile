@@ -1,22 +1,19 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Rewards
 {
-    internal class DailyRewardView : MonoBehaviour
+    internal class RewardView : MonoBehaviour
     {
         private const string CurrentSlotInActiveKey = nameof(CurrentSlotInActiveKey);
         private const string TimeGetRewardKey = nameof(TimeGetRewardKey);
 
-        [field: Header("Settings Time Get Reward")]
-        [field: SerializeField] public float TimeCooldown { get; private set; } = 86400;
-        [field: SerializeField] public float TimeDeadline { get; private set; } = 172800;
+        private string _currentSlotInActiveKey;
+        private string _timeGetRewardKey;
 
-        [field: Header("Settings Rewards")]
-        [field: SerializeField] public List<Reward> Rewards { get; private set; }
+        public RewardSettings RewardsData;
 
         [field: Header("Ui Elements")]
         [field: SerializeField] public TMP_Text TimerNewReward { get; private set; }
@@ -25,25 +22,36 @@ namespace Rewards
         [field: SerializeField] public Button GetRewardButton { get; private set; }
         [field: SerializeField] public Button ResetButton { get; private set; }
 
+        private void Awake()
+        {
+            _currentSlotInActiveKey = GetPlayerPrefsKey(RewardsData.frequencyType, CurrentSlotInActiveKey);
+            _timeGetRewardKey = GetPlayerPrefsKey(RewardsData.frequencyType, TimeGetRewardKey);
+        }
+
+        private string GetPlayerPrefsKey(FrequencyType frequencyType, string keyName)
+        {
+            return Enum.GetName(typeof(FrequencyType), frequencyType) + keyName;
+        }
+
         public int CurrentSlotInActive
         {
-            get => PlayerPrefs.GetInt(CurrentSlotInActiveKey);
-            set => PlayerPrefs.SetInt(CurrentSlotInActiveKey, value);
+            get => PlayerPrefs.GetInt(_currentSlotInActiveKey);
+            set => PlayerPrefs.SetInt(_currentSlotInActiveKey, value);
         }
 
         public DateTime? TimeGetReward
         {
             get
             {
-                string data = PlayerPrefs.GetString(TimeGetRewardKey);
+                string data = PlayerPrefs.GetString(_timeGetRewardKey);
                 return !string.IsNullOrEmpty(data) ? DateTime.Parse(data) : null;
             }
             set
             {
                 if (value != null)
-                    PlayerPrefs.SetString(TimeGetRewardKey, value.ToString());
+                    PlayerPrefs.SetString(_timeGetRewardKey, value.ToString());
                 else
-                    PlayerPrefs.DeleteKey(TimeGetRewardKey);
+                    PlayerPrefs.DeleteKey(_timeGetRewardKey);
             }
         }
     }
