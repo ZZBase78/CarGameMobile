@@ -23,17 +23,24 @@ namespace Tween.Editor
             var animationType = new PropertyField(serializedObject.FindProperty(CustomButtonByInheritance.AnimationTypeName));
             var curveEase = new PropertyField(serializedObject.FindProperty(CustomButtonByInheritance.CurveEaseName));
             var duration = new PropertyField(serializedObject.FindProperty(CustomButtonByInheritance.DurationName));
+            var additionalParam = new PropertyField(serializedObject.FindProperty(CustomButtonByInheritance.AdditionalParamName));
 
             var tweenLabel = new Label("Settings Tween");
             var intractableLabel = new Label("Interactable");
+            var additionalLabel = new Label("New parametr");
 
             root.Add(tweenLabel);
             root.Add(animationType);
             root.Add(curveEase);
             root.Add(duration);
 
+            root.Add(new Label(string.Empty));
             root.Add(intractableLabel);
             root.Add(new IMGUIContainer(OnInspectorGUI));
+
+            root.Add(new Label(string.Empty));
+            root.Add(additionalLabel);
+            root.Add(additionalParam);
 
             return root;
         }

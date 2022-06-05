@@ -18,6 +18,9 @@ namespace Tween
         [SerializeField] private float _duration = 0.6f;
         [SerializeField] private float _strength = 30f;
 
+        [Header("New parametr")]
+        [SerializeField] private int _additionalParam = 15;
+
 
         private void OnValidate() => InitComponents();
         private void Awake() => InitComponents();
@@ -29,12 +32,15 @@ namespace Tween
         {
             _button ??= GetComponent<Button>();
             _rectTransform ??= GetComponent<RectTransform>();
+
+            Debug.Log($"{nameof(_additionalParam)}: {_additionalParam}");
         }
 
 
         private void OnButtonClick() =>
             ActivateAnimation();
 
+        [ContextMenu("Play Animation")]
         private void ActivateAnimation()
         {
             switch (_animationButtonType)
@@ -47,6 +53,12 @@ namespace Tween
                     _rectTransform.DOShakeAnchorPos(_duration, Vector2.one * _strength).SetEase(_curveEase);
                     break;
             }
+        }
+
+        [ContextMenu("Stop Animation")]
+        private void StopAnimation()
+        {
+            _rectTransform.DOKill();
         }
     }
 }
