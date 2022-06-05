@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f043fc8cca38aa94a857780d160748d8, type: 3}
   m_Name: AbilityButtonAnimatorSettings
   m_EditorClassIdentifier: 
-  _animationButtonPressedSize: 0.9
-  _animationButtonNormalSize: 1
-  _animationDuration: 0.1
+  <ButtonNormalSize>k__BackingField: 1
+  <ButtonPressedSize>k__BackingField: 0.9
+  <Duration>k__BackingField: 0.1
