@@ -15,16 +15,18 @@ namespace Ui
         [SerializeField] private Button _buttonShed;
         [SerializeField] private Button _buttonAdsReward;
         [SerializeField] private Button _buttonBuyProduct;
+        [SerializeField] private Button _buttonDailyReward;
 
 
         public void Init(UnityAction startGame, UnityAction settings, UnityAction shed,
-            UnityAction adsReward, UnityAction<string> buyProduct)
+            UnityAction adsReward, UnityAction<string> buyProduct, UnityAction dailyReward)
         {
             _buttonStart.onClick.AddListener(startGame);
             _buttonSettings.onClick.AddListener(settings);
             _buttonShed.onClick.AddListener(shed);
             _buttonAdsReward.onClick.AddListener(adsReward);
             _buttonBuyProduct.onClick.AddListener(() => buyProduct(_productId));
+            _buttonDailyReward.onClick.AddListener(dailyReward);
         }
 
         public void OnDestroy()
@@ -34,6 +36,7 @@ namespace Ui
             _buttonShed.onClick.RemoveAllListeners();
             _buttonAdsReward.onClick.RemoveAllListeners();
             _buttonBuyProduct.onClick.RemoveAllListeners();
+            _buttonDailyReward.onClick.RemoveAllListeners();
         }
     }
 }
