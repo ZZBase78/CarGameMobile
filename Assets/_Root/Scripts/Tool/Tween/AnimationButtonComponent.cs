@@ -23,7 +23,12 @@ namespace Tool.Tween
         private void Awake() => InitComponents();
 
         private void Start() => _button.onClick.AddListener(OnButtonClick);
-        private void OnDestroy() => _button.onClick.RemoveAllListeners();
+        private void OnDestroy()
+        {
+            _rectTransform?.DOKill();
+            _button.onClick.RemoveAllListeners();
+        }
+
 
         private void InitComponents()
         {

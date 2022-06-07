@@ -38,16 +38,16 @@ namespace Game.InputLogic
         private void StartUsing()
         {
             _usingJoystick = true;
-            SetActive(true);
+            SetJoystickActive(true);
         }
 
         private void FinishUsing()
         {
             _usingJoystick = false;
-            SetActive(false);
+            SetJoystickActive(false);
         }
 
-        private void SetActive(bool active) =>
+        private void SetJoystickActive(bool active) =>
             _container.alpha = active ? _enabledAlpha : _disabledAlpha;
 
         protected override void Move()

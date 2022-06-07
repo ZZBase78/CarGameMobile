@@ -9,6 +9,8 @@ namespace Features.Fight
 {
     internal class FightController : BaseController
     {
+        public event Action OnEndFight = delegate { };
+
         private readonly ResourcePath _resourcePath = new ResourcePath("Prefabs/Fight/FightView");
         private readonly ProfilePlayer _profilePlayer;
         private readonly FightView _view;
@@ -206,6 +208,6 @@ namespace Features.Fight
             Close();
         }
 
-        private void Close() => _profilePlayer.CurrentState.Value = GameState.Game;
+        private void Close() => OnEndFight.Invoke();
     }
 }
