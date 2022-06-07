@@ -1,4 +1,5 @@
 using Game.Transport;
+using Profile;
 using Tool;
 using UnityEngine;
 
@@ -13,10 +14,15 @@ namespace Game.InputLogic
         public InputGameController(
             SubscriptionProperty<float> leftMove,
             SubscriptionProperty<float> rightMove,
-            TransportModel transportModel)
+            TransportModel model)
         {
             _view = LoadView();
-            _view.Init(leftMove, rightMove, transportModel.Speed);
+            _view.Init(leftMove, rightMove, model.Speed);
+        }
+
+        public void SetActive(bool active)
+        {
+            _view.SetActive(active);
         }
 
         private BaseInputView LoadView()

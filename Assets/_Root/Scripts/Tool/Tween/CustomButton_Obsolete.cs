@@ -37,6 +37,9 @@ namespace Tool.Tween
             _rectTransform ??= GetComponent<RectTransform>();
         }
 
+        protected override void OnDestroy() =>
+            _rectTransform?.DOKill();
+
 
         public override void OnPointerClick(PointerEventData eventData)
         {

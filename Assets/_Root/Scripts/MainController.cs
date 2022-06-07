@@ -14,7 +14,6 @@ internal class MainController : BaseController
     private MainMenuController _mainMenuController;
     private SettingsMenuController _settingsMenuController;
     private RewardController _rewardController;
-    private StartFightController _startFightController;
     private FightController _fightController;
     private GameController _gameController;
     private ShedMvcContainer _shedContainer;
@@ -31,6 +30,7 @@ internal class MainController : BaseController
 
     protected override void OnDispose()
     {
+        if (_settingsMenuController != null) _settingsMenuController.OnBackPressed += OnSettingsBackPressed;
         DisposeChildObjects();
         _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
@@ -47,6 +47,7 @@ internal class MainController : BaseController
                 break;
             case GameState.Settings:
                 _settingsMenuController = new SettingsMenuController(_placeForUi, _profilePlayer);
+                _settingsMenuController.OnBackPressed += OnSettingsBackPressed;
                 break;
             case GameState.Shed:
                 _shedContainer = new ShedMvcContainer(_profilePlayer, _placeForUi);
@@ -56,12 +57,13 @@ internal class MainController : BaseController
                 break;
             case GameState.Game:
                 _gameController = new GameController(_placeForUi, _profilePlayer);
-                _startFightController = new StartFightController(_placeForUi, _profilePlayer);
-                break;
-            case GameState.Fight:
-                _fightController = new FightController(_placeForUi, _profilePlayer);
                 break;
         }
+    }
+
+    private void OnSettingsBackPressed()
+    {
+        _profilePlayer.CurrentState.Value = GameState.Start;
     }
 
     private void DisposeChildObjects()
@@ -69,7 +71,6 @@ internal class MainController : BaseController
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
         _rewardController?.Dispose();
-        _startFightController?.Dispose();
         _fightController?.Dispose();
         _gameController?.Dispose();
         _shedContainer?.Dispose();

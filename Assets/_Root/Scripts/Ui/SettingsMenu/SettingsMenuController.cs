@@ -1,4 +1,5 @@
 using Profile;
+using System;
 using Tool;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -7,6 +8,8 @@ namespace Ui
 {
     internal class SettingsMenuController : BaseController
     {
+        public event Action OnBackPressed = delegate { };
+
         private readonly ResourcePath _resourcePath = new ResourcePath("Prefabs/Ui/SettingsMenu");
         private readonly ProfilePlayer _profilePlayer;
         private readonly SettingsMenuView _view;
@@ -30,6 +33,6 @@ namespace Ui
         }
 
         private void Back() =>
-            _profilePlayer.CurrentState.Value = GameState.Start;
+            OnBackPressed.Invoke();
     }
 }

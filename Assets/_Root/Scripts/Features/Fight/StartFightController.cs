@@ -1,4 +1,5 @@
 using Profile;
+using System;
 using Tool;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Features.Fight
 {
     internal class StartFightController : BaseController
     {
+        public event Action OnFightButtonPressed = delegate { };
+
         private readonly ResourcePath _resourcePath = new ResourcePath("Prefabs/Fight/StartFightView");
 
         private readonly StartFightView _view;
@@ -23,13 +26,13 @@ namespace Features.Fight
         private StartFightView LoadView(Transform placeForUi)
         {
             GameObject prefab = ResourcesLoader.LoadPrefab(_resourcePath);
-            GameObject objectView = Object.Instantiate(prefab, placeForUi, false);
+            GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
             AddGameObject(objectView);
 
             return objectView.GetComponent<StartFightView>();
         }
 
         private void StartFight() =>
-            _profilePlayer.CurrentState.Value = GameState.Fight;
+            OnFightButtonPressed.Invoke();
     }
 }
