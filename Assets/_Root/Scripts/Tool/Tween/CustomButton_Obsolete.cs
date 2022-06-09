@@ -21,6 +21,8 @@ namespace Tool.Tween
         [SerializeField] private float _duration = 0.6f;
         [SerializeField] private float _strength = 30f;
 
+        private Tweener _tweenAnimation;
+
 
         protected override void Awake()
         {
@@ -45,19 +47,26 @@ namespace Tool.Tween
             ActivateSound();
         }
 
+        [ContextMenu(nameof(ActivateAnimation))]
         private void ActivateAnimation()
         {
+            StopAnimation();
+
             switch (_animationButtonType)
             {
                 case AnimationButtonType.ChangeRotation:
-                    _rectTransform.DOShakeRotation(_duration, Vector3.forward * _strength).SetEase(_curveEase);
+                    _tweenAnimation = _rectTransform.DOShakeRotation(_duration, Vector3.forward * _strength).SetEase(_curveEase);
                     break;
 
                 case AnimationButtonType.ChangePosition:
-                    _rectTransform.DOShakeAnchorPos(_duration, Vector2.one * _strength).SetEase(_curveEase);
+                    _tweenAnimation = _rectTransform.DOShakeAnchorPos(_duration, Vector2.one * _strength).SetEase(_curveEase);
                     break;
             }
         }
+
+        [ContextMenu(nameof(StopAnimation))]
+        private void StopAnimation() =>
+            _tweenAnimation?.Kill();
 
         private void ActivateSound()
         {
