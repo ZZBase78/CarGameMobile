@@ -16,7 +16,15 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 358a0b338c3104c48b4c063f439d3419
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: cf4d056572d2fe245818d53b767782b7
+    m_Address: Background
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d490aa6da587a7b4ea107bec7be23457
+    m_Address: Sky
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f2fd3f2671b0342c085196b05069e11a, type: 2}
   m_SchemaSet:
