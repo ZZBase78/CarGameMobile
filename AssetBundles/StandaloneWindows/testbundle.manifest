@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3892812405
+CRC: 3332898732
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -15,5 +15,5 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/_Root/BundleTest/box_exp2.png
+- Assets/_Root/BundleTest/Bundles/box_exp2.png
 Dependencies: []
