@@ -32,7 +32,7 @@ namespace Tool.Tween
             InitComponents();
         }
 
-        protected new void OnValidate() =>
+        protected override void OnValidate() =>
             InitComponents();
 
         private void InitComponents()
