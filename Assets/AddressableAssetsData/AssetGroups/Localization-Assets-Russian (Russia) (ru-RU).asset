@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Russian (Russia) (ru-RU)
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Russian (Russia) (ru-RU)
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 79e1ac495d3753b4cbcde46c3f34d0a4
+  m_SerializeEntries:
+  - m_GUID: f1fe9cdb96f0d9248a97b206cc146ebf
+    m_Address: button_login
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru-RU
+    - Locale-en
+    - Locale-fr
+  - m_GUID: e1172d0161030574dae11c5e2cb8921a
+    m_Address: button_round
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru-RU
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: f2fd3f2671b0342c085196b05069e11a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2dfbd1e2e4c109c4892797e7e14f0866, type: 2}
+    - {fileID: 11400000, guid: 631e1527e4f6c1d4e89950d2e8a0e50f, type: 2}
