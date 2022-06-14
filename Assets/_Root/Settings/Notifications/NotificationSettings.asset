@@ -30,3 +30,15 @@ MonoBehaviour:
       <Minute>k__BackingField: 40
     <RepeatInterval>k__BackingField:
       <Seconds>k__BackingField: 30
+  - <Id>k__BackingField: notification_id
+    <Title>k__BackingField: WOW Second Notification
+    <Text>k__BackingField: Hello! It is my homework second notification!
+    <RepeatType>k__BackingField: 1
+    <FireTime>k__BackingField:
+      <Year>k__BackingField: 2022
+      <Month>k__BackingField: 6
+      <Day>k__BackingField: 15
+      <Hour>k__BackingField: 15
+      <Minute>k__BackingField: 0
+    <RepeatInterval>k__BackingField:
+      <Seconds>k__BackingField: 30
